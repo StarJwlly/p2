@@ -26,24 +26,26 @@ export default function App() {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       <Pressable 
         onPress={onPressFunction}
         style={styles.button}>
         <Text>press for cats!</Text>
       </Pressable>
-      {
-        images.map(x => 
-          x != undefined ? 
-          <Image
-            resizeMode='contain'
-            style={{ width: x.width, height: x.height, }}
-            source={{ uri: x.url }}
-          /> : <Image/>
-        )
-      }
-      <StatusBar style="auto" />
-    </ScrollView>
+      <ScrollView style={{width: '100%'}} contentContainerStyle={styles.container}>
+        {
+          images.map(x => 
+            x != undefined ? 
+            <Image
+              resizeMode='contain'
+              style={{ width: x.width, height: x.height, }}
+              source={{ uri: x.url }}
+            /> : <Image/>
+          )
+        }
+        <StatusBar style="auto" />
+      </ScrollView>
+    </View>
   );
 }
 
