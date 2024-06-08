@@ -21,12 +21,7 @@ export default function App() {
 
   function onPressFunction(event: GestureResponderEvent): void {
     axios.get("https://api.thecatapi.com/v1/images/search?limit=5").then(v => {
-      let t = []
-      for (let i = 0; i < 5; i++) {
-        t.push(new Img (v.data[i].url, v.data[i].width, v.data[i].height));
-      }
-      console.log(v.data.slice(0, 5).map(x => new Img(x.url, x.width, x.height)))
-      setimages(t);
+      setimages(v.data.slice(0, 5).map(x => new Img(x.url, x.width, x.height)));
     })
   }
 
@@ -35,12 +30,13 @@ export default function App() {
       <Pressable 
         onPress={onPressFunction}
         style={styles.button}>
-        <Text>I'm pressable!</Text>
+        <Text>press for cats!</Text>
       </Pressable>
       {
         images.map(x => 
           x != undefined ? 
           <Image
+            resizeMode='contain'
             style={{ width: x.width, height: x.height, }}
             source={{ uri: x.url }}
           /> : <Image/>
