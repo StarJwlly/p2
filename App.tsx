@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import {GestureResponderEvent, Pressable, StyleSheet, Text, View, Image } from 'react-native';
+import {GestureResponderEvent, Pressable, StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 
 class Img {
   height: number;
@@ -31,7 +31,7 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Pressable 
         onPress={onPressFunction}
         style={styles.button}>
@@ -41,18 +41,13 @@ export default function App() {
         images.map(x => 
           x != undefined ? 
           <Image
-            style={{
-              width: x.width,
-              height: x.height,
-            }}
-            source={{
-              uri: x.url,
-            }}
-          /> : <Image></Image>
+            style={{ width: x.width, height: x.height, }}
+            source={{ uri: x.url }}
+          /> : <Image/>
         )
       }
       <StatusBar style="auto" />
-    </View>
+    </ScrollView>
   );
 }
 
