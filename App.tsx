@@ -8,7 +8,7 @@ class Img {
   width: number;
   url: string;
 
-  constructor(url, width, height) {
+  constructor(url: string, width: number, height: number) {
     this.url = url;
     this.width = width;
     this.height = height;
@@ -25,7 +25,7 @@ export default function App() {
       for (let i = 0; i < 5; i++) {
         t.push(new Img (v.data[i].url, v.data[i].width, v.data[i].height));
       }
-      console.log(v)
+      console.log(v.data.slice(0, 5).map(x => new Img(x.url, x.width, x.height)))
       setimages(t);
     })
   }
@@ -37,15 +37,20 @@ export default function App() {
         style={styles.button}>
         <Text>I'm pressable!</Text>
       </Pressable>
-      <Image
-        style={{
-          width: images[0] == undefined ? 0 : images[0].width,
-          height: images[0] == undefined ? 0 : images[0].height,
-        }}
-        source={{
-          uri: images[0] == undefined ? '' : images[0].url,
-        }}
-      />
+      {
+        images.map(x => 
+          x != undefined ? 
+          <Image
+            style={{
+              width: x.width,
+              height: x.height,
+            }}
+            source={{
+              uri: x.url,
+            }}
+          /> : <Image></Image>
+        )
+      }
       <StatusBar style="auto" />
     </View>
   );
