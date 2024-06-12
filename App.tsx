@@ -19,19 +19,32 @@ export default function App() {
 
   const [images, setimages] = useState <Img[]>([]);
 
-  function onPressFunction(event: GestureResponderEvent): void {
+  function replaceAllImages(event: GestureResponderEvent): void {
     axios.get("https://api.thecatapi.com/v1/images/search?limit=5").then(v => {
       setimages(v.data.slice(0, 5).map(x => new Img(x.url, x.width, x.height)));
     })
   }
 
+  function addNewImages(event: GestureResponderEvent): void {
+    axios.get("https://api.thecatapi.com/v1/images/search?limit=5").then(v => {
+      setimages([...images, ...v.data.slice(0, 5).map(x => new Img(x.url, x.width, x.height))]);
+    })
+  }
+
   return (
     <View style={styles.container}>
-      <Pressable 
-        onPress={onPressFunction}
-        style={styles.button}>
-        <Text>press for cats!</Text>
-      </Pressable>
+      <View style={{flexDirection: 'row'}}>
+        <Pressable 
+          onPress={replaceAllImages}
+          style={styles.button}>
+          <Text>press for cats!</Text>
+        </Pressable>
+        <Pressable 
+          onPress={addNewImages}
+          style={[styles.button, {backgroundColor: '#00e60f'}]}>
+          <Text>press for more cats!</Text>
+        </Pressable>
+      </View>
       <ScrollView style={{width: '100%'}} contentContainerStyle={styles.container}>
         {
           images.map(x => 
@@ -60,6 +73,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0096F3',
     padding: 12,
     borderRadius: 4,
-    marginBottom: 12
+    marginBottom: 12,
+    flex: 1,
   },
 });
